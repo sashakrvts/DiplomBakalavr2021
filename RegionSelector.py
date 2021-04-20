@@ -2,7 +2,7 @@
 import cv2
 import random
 
-path = 'Images/BlankTemplate3.png'
+path = 'Images/BlankTemplate4.png'
 scale = 0.5
 circles = []
 counter = 0

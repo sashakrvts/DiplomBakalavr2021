@@ -19,13 +19,23 @@ X_train = X_train / 255
 X_test = X_test / 255
 
 print(X_train.shape)
+for x in range(10):
+    #print(len(np.where(y_train==x)[0]))
+    samples_num.append(len(np.where(y_train==x)[0]))
+
 
 
 y_train = np_utils.to_categorical(y_train)
 y_test = np_utils.to_categorical(y_test)
 num_classes = y_test.shape[1]
 
+plt.figure(figsize = (10,5))
 
+plt.bar(range(num_classes),samples_num)
+plt.title('Розподіл навчальної вибірки по класам')
+plt.xlabel('Клас з зображеннями цифри')
+plt.ylabel('Кількість зображень')
+plt.show()
 
 def myModel():
     model = Sequential()
@@ -50,17 +60,17 @@ print("Large CNN Error: %.2f%%" % (100-scores[1]*100))
 
 #### PLOT THE RESULTS
 plt.figure(1)
-plt.plot(history.history['loss'])
+plt.plot(history.history['Loss'])
 plt.plot(history.history['val_loss'])
-plt.legend(['training', 'validation'])
-plt.title('Loss')
-plt.xlabel('epoch')
+plt.legend(['Тренувальний набір', 'Тестовий набір'])
+plt.title('Втрати')
+plt.xlabel('Епохи (прогони тренуваняня моделі)')
 plt.figure(2)
 plt.plot(history.history['accuracy'])
 plt.plot(history.history['val_accuracy'])
-plt.legend(['training', 'validation'])
-plt.title('Accuracy')
-plt.xlabel('epoch')
+plt.legend(['Тренувальний набір', 'Тестовий набір'])
+plt.title('Точність')
+plt.xlabel('Епохи (прогони тренуваняня моделі)')
 plt.show()
 
 pickle_out = open("trained_model.p", "wb")

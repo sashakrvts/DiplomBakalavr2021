@@ -54,7 +54,28 @@ if file_blank is None or file_right_answers is None:
 else:
 
     right_answers = receive_answers_from_excel((file_right_answers))
-    st.success("Правильні відповіді: "+ str(right_answers))
+    st.text("Правильні відповіді: "+ str(right_answers))
 
     blank_answers = receive_blank_answers(file_blank)
+    st.text("Відповіді з бланку: " + str(blank_answers))
+
+    # user_answer1 = st.number_input(label = 'Відповідь №1')
+    # user_answer1 = st.number_input(label = 'Відповідь №2')
+    # user_answer2 = st.number_input(label = 'Відповідь №3')
+    # user_answer3 = st.number_input(label = 'Відповідь №4')
+    count = 0
+    user_answer = st.radio("Чи всі відповіді вірно розпізнані?",
+                     ('Так', 'Ні'),key = count)
+    while user_answer == 'Ні':
+        st.write('Вкажіть номер відповіді, яку розпізнано невірно')
+        user_answer2 = int(st.number_input(label = 'Номер відповіді', step =1.0))
+        print(user_answer2,type(user_answer2))
+        user_answer3 = st.text_input(label='Значення відповіді з бланку')
+        if user_answer2 is not None and user_answer3 is not None:
+            blank_answers[user_answer2-1] = user_answer3
+        count+=1
+        user_answer = st.radio("Чи всі останні відповіді вірно розпізнані?",
+                               ('Так', 'Ні'), key=count)
+        #user_answer = st.radio("Чи всі відповіді вірно розпізнані?",
+                               #('Так', 'Ні'))
     st.success("Відповіді з бланку: " + str(blank_answers))

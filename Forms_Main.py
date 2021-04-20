@@ -6,16 +6,20 @@ import  MultiDigits
 
 def blank_crop(img):
     per = 25
-    roi =  [[(402, 78), (634, 120), ' text', 'answer11'],
-            [(668, 78), (886, 118), 'text', 'answer12'],
-            [(402, 122), (638, 162), 'text', 'answer21'],
-            [(670, 126), (888, 164), 'text', 'answer22']]
+    roi =  [[(632, 24), (880, 62), ' int', 'id'],
+            [(396, 70), (626, 106), ' int', 'ans11'],
+            [(664, 68), (880, 108), ' int', 'ans12'],
+            [(394, 116), (628, 150), ' int', 'ans21'],
+            [(662, 116), (878, 150), ' int', 'ans22'],
+            [(398, 158), (626, 196), 'int', 'ans31'],
+            [(662, 158), (882, 194), 'int', 'ans32']]
+
 
 
     answers = []
     pytesseract.pytesseract.tesseract_cmd = 'C:\\Program Files\\Tesseract-OCR\\tesseract.exe'
 
-    startImage = cv2.imread('Images/BlankTemplate3.png')
+    startImage = cv2.imread('Images/BlankTemplate4.png')
     h,w,c = startImage.shape
     ##detector creating
     orb = cv2.ORB_create(1000)
@@ -36,7 +40,7 @@ def blank_crop(img):
     matches = bf.match(des2, des1) # matching the decreptors
     matches.sort(key= lambda x :x.distance)#sort all the matches based on a distance (the lower the distance, the better the match is)
     good = matches [:int(len(matches)*(per/100))]#extract 25% of the best matches
-    imgMatch = cv2.drawMatches(img,kp2,startImage,kp1,good[:20],None, flags =2)
+    #imgMatch = cv2.drawMatches(img,kp2,startImage,kp1,good[:20],None, flags =2)
     #cv2.imshow("match", imgMatch)
 
         # finding the relationships between start image and a test image
@@ -62,10 +66,12 @@ def blank_crop(img):
         #cv2.imshow(str(x) , imgCrop)
         answers.append(answer)
 
-    answers[0]= answers[0]+'.'+answers[1]
-    answers[1] = answers[2] + '.' + answers[3]
-    answers.remove(answers[3])
-    answers.remove(answers[2])
+    answers[1]= answers[1]+'.'+answers[2]
+    answers[2] = answers[3] + '.' + answers[4]
+    answers[3] = answers[5] + '.' + answers[6]
+    answers.remove(answers[6])
+    answers.remove(answers[5])
+    answers.remove(answers[4])
 
     #cv2.imshow('2', imgShow)
     return answers
