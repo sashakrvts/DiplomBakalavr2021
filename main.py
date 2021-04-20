@@ -27,19 +27,25 @@ st.write('''
          # Перевірка відповідей
          ''')
 file_right_answers =  st.file_uploader('Завантажте файл з правильними відповідями',
-                         type = ['xlsx', 'txt'])
+                         type = ['xlsx'])
 file_blank =  st.file_uploader('Завантажте фотографію бланка з відповідями',
                          type = ['jpg', 'png'])
 
-def import_and_predict(image):
-    #size = [1280, 590]
-    #image = ImageOps.fit(image, Image.ANTIALIAS)
-    print("import predict 1", type(image))
-    image = np.asarray(image)
-    print("import predict 2", type(image)) #str
-    #img_reshape = image.reshape((image.shape[0], 1280, 590, 3)).astype('float32')
-    answers = Forms_Main.blank_crop(image)
-    return answers
+
+def receive_answers_from_excel(file_right_answers):
+    right_answers = pd.read_excel(file_right_answers)
+    right_answers = right_answers.to_numpy()
+    only_right_answers = []
+    for el in right_answers:
+        only_right_answers.append(el[1])
+    return only_right_answers
+
+def receive_blank_answers(file_blank):
+    image_blank = Image.open(file_blank)
+    image_blank = np.asarray(image_blank)
+    st.image(image_blank) # Image display
+    blank_answers = Forms_Main.blank_crop(image_blank)
+    return blank_answers
 
 
 
@@ -47,15 +53,8 @@ if file_blank is None or file_right_answers is None:
     st.text("Завантажте обидва файли для проведення перевірки")
 else:
 
-    image_blank = Image.open(file_blank)
-    file_answers =  pd.read_excel(file_right_answers)
-    file_answers=file_answers.to_numpy()
-    print(file_answers)
-    st.success(file_answers)
-    print("main 1", type(image_blank))
-    image_blank = np.asarray(image_blank)
-    print("main 2", type(image_blank))  # str
-    st.image(image_blank) # Image display
-    #ans = import_and_predict(image)
-    answers = Forms_Main.blank_crop(image_blank)
-    st.success(answers)
+    right_answers = receive_answers_from_excel((file_right_answers))
+    st.success("Правильні відповіді: "+ str(right_answers))
+
+    blank_answers = receive_blank_answers(file_blank)
+    st.success("Відповіді з бланку: " + str(blank_answers))

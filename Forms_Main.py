@@ -61,8 +61,11 @@ def blank_crop(img):
         answer = MultiDigits.image_processing(imgCrop) #string
         #cv2.imshow(str(x) , imgCrop)
         answers.append(answer)
+
     answers[0]= answers[0]+'.'+answers[1]
     answers[1] = answers[2] + '.' + answers[3]
+    answers.remove(answers[3])
+    answers.remove(answers[2])
 
     #cv2.imshow('2', imgShow)
     return answers
