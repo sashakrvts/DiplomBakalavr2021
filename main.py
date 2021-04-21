@@ -85,21 +85,21 @@ else:
     blank_answers = receive_blank_answers(file_blank)
     st.text("Відповіді з бланку: " + str(blank_answers))
 
-    count1, count2, count3 = 0, 1, 2
-    user_answer = st.radio("Чи всі відповіді вірно розпізнані?",
-                           ('Так', 'Ні'), key=count1)
-    while user_answer == 'Ні':
-        st.write('Вкажіть номер відповіді, яку розпізнано невірно')
-        user_answer2 = int(st.number_input(label='Номер відповіді', step=1.0, key=count2))
-        print(user_answer2, type(user_answer2))
-        user_answer3 = st.text_input(label='Значення відповіді з бланку', key=count3)
-        if user_answer2 is not None and user_answer3 is not None:
-            blank_answers[user_answer2 - 1] = user_answer3
-        count1 += 1
-        count2 += 1
-        count3 += 1
-        user_answer = st.radio("Чи всі останні відповіді вірно розпізнані?",
-                               ('Так', 'Ні'), key=count1)
+    # count1, count2, count3 = 0, 1, 2
+    # user_answer = st.radio("Чи всі відповіді вірно розпізнані?",
+    #                        ('Так', 'Ні'), key=count1)
+    # while user_answer == 'Ні':
+    #     st.write('Вкажіть номер відповіді, яку розпізнано невірно')
+    #     user_answer2 = int(st.number_input(label='Номер відповіді', step=1.0, key=count2))
+    #     print(user_answer2, type(user_answer2))
+    #     user_answer3 = st.text_input(label='Значення відповіді з бланку', key=count3)
+    #     if user_answer2 is not None and user_answer3 is not None:
+    #         blank_answers[user_answer2 - 1] = user_answer3
+    #     count1 += 1
+    #     count2 += 1
+    #     count3 += 1
+    #     user_answer = st.radio("Чи всі останні відповіді вірно розпізнані?",
+    #                            ('Так', 'Ні'), key=count1)
 
     # blank_answers=error_check(blank_answers)
     # st.success("Відповіді з бланку: " + str(blank_answers))

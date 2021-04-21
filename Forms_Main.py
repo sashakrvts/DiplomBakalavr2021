@@ -3,6 +3,7 @@ import numpy as np
 import pytesseract
 import os
 import  MultiDigits
+import streamlit as st
 
 def blank_crop(img):
     per = 25
@@ -57,6 +58,7 @@ def blank_crop(img):
     M, _ = cv2.findHomography(srcPoints, dstPoints, cv2.RANSAC, 5.0)
     imgScan = cv2.warpPerspective(img, M, (w, h))  # allign form
     #cv2.imshow("Scan", imgScan)
+    st.image(imgScan)
     imgShow = imgScan.copy() #final image
     imgMask = np.zeros_like(imgShow)
 
@@ -73,19 +75,29 @@ def blank_crop(img):
         answers.append(answer)
 
 
-    # a = list(range(1,10))
-    # b = list(range(1,18,2))
-    # print(a)
-    # print(b)
-    # for i, j in zip(a,b):
-    #     answers[i] = float('{0}.{1}'.format(answers[j], answers[j+1]))
-    answers[1]= float('{0}.{1}'.format(answers[1], answers[2]))
-    answers[2] = float('{0}.{1}'.format(answers[3], answers[4]))
-    answers[3] = float('{0}.{1}'.format(answers[5], answers[6]))
-    answers.remove(answers[6])
-    answers.remove(answers[5])
-    answers.remove(answers[4])
+    a = list(range(1,5))
+    b = list(range(1,10,2))
+    print(a)
+    print(b)
+    for i, j in zip(a,b):
+        answers[i] = float('{0}.{1}'.format(answers[j], answers[j+1]))
+    # answers[1]= float('{0}.{1}'.format(answers[1], answers[2]))
+    # answers[2] = float('{0}.{1}'.format(answers[3], answers[4]))
+    # answers[3] = float('{0}.{1}'.format(answers[5], answers[6]))
+    # answers[4] = float('{0}.{1}'.format(answers[7], answers[8]))
+    #answers[5] = float('{0}.{1}'.format(answers[9], answers[10]))
 
+    c = list(reversed(range(5,9)))
+    print(c)
+    for i in c :
+        answers.remove(answers[i])
+    # answers.remove(answers[10])
+    # answers.remove(answers[9])
+    # answers.remove(answers[8])
+    # answers.remove(answers[7])
+    # answers.remove(answers[6])
+
+    st.image(imgShow)
     #cv2.imshow('2', imgShow)
     return answers
     #return answers
@@ -101,9 +113,9 @@ def blank_crop(img):
     #cv2.imshow(y + '2', imgShow)
 #img = 'Images/BlankTesting/blank_test1.jpg'
 #print(img.type)
-img = 'Images/BlankTesting/blank_test4.jpg'
-img = cv2.imread(img)
-print(blank_crop(img))
+#img = 'Images/BlankTesting/blank_test4.jpg'
+#img = cv2.imread(img)
+#print(blank_crop(img))
 
 #cv2.imshow('Output', startImage)
 cv2.waitKey(0)
