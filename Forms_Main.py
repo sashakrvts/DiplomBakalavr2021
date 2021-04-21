@@ -7,12 +7,18 @@ import  MultiDigits
 def blank_crop(img):
     per = 25
     roi =  [[(632, 24), (880, 62), ' int', 'id'],
-            [(396, 70), (626, 106), ' int', 'ans11'],
-            [(664, 68), (880, 108), ' int', 'ans12'],
-            [(394, 116), (628, 150), ' int', 'ans21'],
-            [(662, 116), (878, 150), ' int', 'ans22'],
-            [(398, 158), (626, 196), 'int', 'ans31'],
-            [(662, 158), (882, 194), 'int', 'ans32']]
+           [(396, 70), (626, 106), ' int', 'ans11'],
+           [(664, 68), (880, 108), ' int', 'ans12'],
+           [(394, 116), (628, 150), ' int', 'ans21'],
+           [(662, 116), (878, 150), ' int', 'ans22'],
+           [(398, 158), (626, 196), 'int', 'ans31'],
+           [(662, 158), (882, 194), 'int', 'ans32'],
+           [(394, 206), (630, 242), ' int', 'ans41'], [(662, 206), (882, 242), ' int', 'ans42'],
+           [(396, 248), (630, 288), ' int', 'ans51'], [(666, 250), (878, 284), 'int', 'ans52'],
+           [(394, 294), (630, 332), 'int', 'ans61'], [(660, 294), (878, 328), 'int', 'ans62'],
+           [(396, 336), (630, 376), ' int', 'ans71'], [(664, 338), (876, 376), ' int', 'ans72'],
+           [(396, 380), (630, 422), 'int', 'ans81'], [(666, 380), (882, 422), 'int', 'ans82'],
+           [(396, 426), (630, 462), 'int', 'ans91'], [(662, 424), (882, 464), 'int', 'ans92']]
 
 
 
@@ -66,9 +72,16 @@ def blank_crop(img):
         #cv2.imshow(str(x) , imgCrop)
         answers.append(answer)
 
-    answers[1]= answers[1]+'.'+answers[2]
-    answers[2] = answers[3] + '.' + answers[4]
-    answers[3] = answers[5] + '.' + answers[6]
+
+    # a = list(range(1,10))
+    # b = list(range(1,18,2))
+    # print(a)
+    # print(b)
+    # for i, j in zip(a,b):
+    #     answers[i] = float('{0}.{1}'.format(answers[j], answers[j+1]))
+    answers[1]= float('{0}.{1}'.format(answers[1], answers[2]))
+    answers[2] = float('{0}.{1}'.format(answers[3], answers[4]))
+    answers[3] = float('{0}.{1}'.format(answers[5], answers[6]))
     answers.remove(answers[6])
     answers.remove(answers[5])
     answers.remove(answers[4])
@@ -88,7 +101,7 @@ def blank_crop(img):
     #cv2.imshow(y + '2', imgShow)
 #img = 'Images/BlankTesting/blank_test1.jpg'
 #print(img.type)
-img = 'Images/BlankTesting/blank_test2.jpg'
+img = 'Images/BlankTesting/blank_test4.jpg'
 img = cv2.imread(img)
 print(blank_crop(img))
 
