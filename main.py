@@ -47,11 +47,11 @@ def receive_answers_from_excel(file_right_answers):
     return only_right_answers
 
 
-def receive_blank_answers(file_blank):
+def receive_blank_answers(file_blank,num):
     image_blank = Image.open(file_blank)
     image_blank = np.asarray(image_blank)
     st.image(image_blank)  # Image display
-    blank_answers = Forms_Main.blank_crop(image_blank)
+    blank_answers = Forms_Main.blank_crop(image_blank,num)
     return blank_answers
 
 def error_check(blank_answers):
@@ -81,8 +81,9 @@ else:
 
     right_answers = receive_answers_from_excel((file_right_answers))
     st.text("Правильні відповіді: " + str(right_answers))
+    num_right_answers = len(right_answers)
 
-    blank_answers = receive_blank_answers(file_blank)
+    blank_answers = receive_blank_answers(file_blank, num_right_answers)
     st.text("Відповіді з бланку: " + str(blank_answers))
 
     # count1, count2, count3 = 0, 1, 2

@@ -5,7 +5,7 @@ import os
 import  MultiDigits
 import streamlit as st
 
-def blank_crop(img):
+def blank_crop(img,num):
     per = 25
     roi =  [[(632, 24), (880, 62), ' int', 'id'],
            [(396, 70), (626, 106), ' int', 'ans11'],
@@ -75,19 +75,23 @@ def blank_crop(img):
         answers.append(answer)
 
 
-    a = list(range(1,5))
-    b = list(range(1,10,2))
+    #a = list(range(1,5))
+    a = list(range(1, num+1))
+    #b = list(range(1,10,2))
+    b = list(range(1, (num+1)*2, 2))
     print(a)
     print(b)
     for i, j in zip(a,b):
         answers[i] = float('{0}.{1}'.format(answers[j], answers[j+1]))
+        print(answers[i])
     # answers[1]= float('{0}.{1}'.format(answers[1], answers[2]))
     # answers[2] = float('{0}.{1}'.format(answers[3], answers[4]))
     # answers[3] = float('{0}.{1}'.format(answers[5], answers[6]))
     # answers[4] = float('{0}.{1}'.format(answers[7], answers[8]))
     #answers[5] = float('{0}.{1}'.format(answers[9], answers[10]))
-
-    c = list(reversed(range(5,9)))
+    print("1 answers", answers)
+    #c = list(reversed(range(5,19)))
+    c = list(reversed(range(num+1, 19)))
     print(c)
     for i in c :
         answers.remove(answers[i])
@@ -96,7 +100,7 @@ def blank_crop(img):
     # answers.remove(answers[8])
     # answers.remove(answers[7])
     # answers.remove(answers[6])
-
+    print("2 answers", answers)
     st.image(imgShow)
     #cv2.imshow('2', imgShow)
     return answers
